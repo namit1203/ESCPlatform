@@ -1,0 +1,92 @@
+h1 {
+    text-align: center;
+    margin-top: 2em;
+  }
+  
+  h4 {
+    font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+  
+  div label {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+  
+  div input[type="email"],
+  div input[type="tel"],
+  div input[type="text"] {
+    padding: 0.5em;
+    border-radius: 0.25em;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-bottom: 1em;
+  }
+  
+  div select {
+    padding: 0.5em;
+    border-radius: 0.25em;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-bottom: 1em;
+  }
+  
+  div button[type="submit"] {
+    padding: 0.75em 1em;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+  }
+  
+  div button[type="submit"]:hover {
+    background-color: #0069d9;
+  }
+  
+  @media only screen and (max-width: 480px) {
+    div input[type="email"],
+    div input[type="tel"],
+    div input[type="text"],
+    div select {
+      width: 100%;
+    }
+  }
+select option[data-icon="http://example.com/images/online.png"] {
+  padding-left: 2em;
+  background-repeat: no-repeat;
+  background-position: 0.5em calc(50% - 0.5em);
+  background-size: 1em 1em;
+}
+
+select option[data-icon="http://example.com/images/online.png"]::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background-image: url(http://example.com/images/online.png);
+}
+
+select option[value="email"][data-icon] {
+  background-image: url(./icons/email.png);
+}
+
+select option[value="phone"][data-icon] {
+  background-image: url(./icons/phone.png);
+}
+
+select option[value="facebook"][data-icon] {
+  background-image: url(./icons/facebook.png);
+}
+
+select option[value="twitter"][data-icon] {
+  background-image: url(./icons/twitter.png);
+}
+
+select option[value="discord"][data-icon] {
+  background-image: url(./icons/discord.png);
+}

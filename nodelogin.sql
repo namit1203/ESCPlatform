@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS `nodelogin` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `nodelogin`;
+drop database nodelogin1;
+CREATE DATABASE IF NOT EXISTS `nodelogin1` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `nodelogin1`;
 
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -19,7 +20,21 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 
 INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `role`, `activation_code`, `rememberme`, `reset`, `registered`, `last_seen`, `tfa_code`, `ip`) VALUES
 (1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@example.com', 'Admin', 'activated', '', '', '2022-01-11 17:30:11', '2022-02-01 19:10:30', '', ''),
-(2, 'member', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'member@example.com', 'Member', 'activated', '', '', '2022-01-11 17:30:11', '2022-01-12 19:47:11', '', '');
+(2, 'namit03', '1f0c5f828de862844ffdc19ce12cb1facdf41495', 'namit291203@gmail.com', 'Member', 'activated', '', '', '2022-01-11 17:30:11', '2022-01-12 19:47:11', '', '');
+CREATE TABLE Team (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  member_id INT ,
+  game_type VARCHAR(255) NOT NULL,
+  contact_type VARCHAR(255) NOT NULL,
+  contact_detail VARCHAR(255) NOT NULL,
+  location VARCHAR(255) NOT NULL,
+  captain_id INT NOT NULL,
+  tournament_id INT,
+  avatar VARCHAR(255),
+  FOREIGN KEY (captain_id) REFERENCES accounts(id),
+  FOREIGN KEY (member_id) REFERENCES accounts(id)
+);
 
 CREATE TABLE IF NOT EXISTS `login_attempts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -36,6 +51,30 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `setting_value` varchar(50) NOT NULL,
   `category` varchar(50) NOT NULL DEFAULT 'General',
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `tournament` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `game_type` varchar(50) NOT NULL,
+  `start_date` DATETIME NOT NULL,
+  `end_date` DATETIME NOT NULL,
+  `tournament_format` VARCHAR(255) NOT NULL,
+  `creator_id`INT NOT NULL,
+  FOREIGN KEY (creator_id) REFERENCES accounts(id),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `match` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  `team_1_id` INT NOT NULL,
+  `team_2_id` INT NOT NULL,
+ `game_type` VARCHAR(255) NOT NULL,
+  `match_date` DATETIME NOT NULL,
+  `winner_id` INT,
+  FOREIGN KEY (team_1_id) REFERENCES Team(id),
+  FOREIGN KEY (team_2_id) REFERENCES Team(id),
+  FOREIGN KEY (winner_id) REFERENCES Team(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `category`) VALUES

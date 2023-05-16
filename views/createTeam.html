@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block title %}Create Team{% endblock %}
+
+{% block content %}
+<div class="content profile">
+  <link rel="stylesheet" href="contact.css">
+  <h2>Create your own team</h2>
+
+  <div class="block">
+    <form action="/createTeam" method="post" enctype="multipart/form-data">
+      <label for="teamName">Team Name:</label>
+      <input type="text" id="teamName" name="teamName" required style="width: 300px"><br>
+      <label for="avatar">Avatar:</label>
+      <input type="file" id="avatar" name="avatar"><br>
+      <label for="gameType">Game Type:</label>
+      <select id="contact-type" name="contact-type">
+        <option value="lol">League of Legends</option>
+        <option value="dota2">Dota 2</option>
+        <option value="csgo">Counter-Strike: Global Offensive</option>
+        <option value="valorant">Valorant</option>
+        <option value="overwatch">Overwatch</option>
+        <option value="cod">Call of Duty</option>
+        <option value="FO4">FIFA ONLINE  </option>
+        <option value="AOV">Arena Of Valor</option>
+      </select>
+      
+      <h4>Contact Information:</h4>
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="contact-type">Type of Contact:</label>
+          <select id="contact-type" name="contact-type" class="form-control">
+            <option value="email" data-icon="./icons/email.png">Email</option>
+            <option value="phone" data-icon="./icons/phone.png">Phone Number</option>
+            <option value="facebook" data-icon="./icons/facebook.png">Facebook Handle</option>
+            <option value="twitter" data-icon="./icons/twitter.png">Twitter Handle</option>
+            <option value="discord" data-icon="./icons/discord.png">Discord Handle</option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <label for="contact-detail">Contact Detail:</label>
+          <input type="text" id="contact-detail" name="contact-detail" class="form-control" style="width: 400px"><br>
+        </div>
+      </div>
+      <label for="gameType">Country:</label>
+      <select id="country" name="country">
+        <option value="VN">Viet Nam</option>
+        <option value="dota2">Dota 2</option>
+        <option value="csgo">Counter-Strike: Global Offensive</option>
+        <option value="valorant">Valorant</option>
+        <option value="overwatch">Overwatch</option>
+        <option value="cod">Call of Duty</option>
+        <option value="FO4">FIFA ONLINE  </option>
+        <option value="AOV">Arena Of Valor</option>
+      </select>
+      <input class="profile-btn"  type="submit" value="Create Team">
+    </form>
+  </div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</div>
+{% endblock %}
