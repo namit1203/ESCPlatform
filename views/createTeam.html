@@ -12,24 +12,24 @@
       <label for="teamName">Team Name:</label>
       <input type="text" id="teamName" name="teamName" required style="width: 300px"><br>
       <label for="avatar">Avatar:</label>
-      <input type="file" id="avatar" name="avatar"><br>
+      <input type="file" id="avatar" name="avatar" accept="image/*"><br>
       <label for="gameType">Game Type:</label>
-      <select id="contact-type" name="contact-type">
+      <select id="gameType" name="gameType">
         <option value="lol">League of Legends</option>
         <option value="dota2">Dota 2</option>
         <option value="csgo">Counter-Strike: Global Offensive</option>
         <option value="valorant">Valorant</option>
         <option value="overwatch">Overwatch</option>
         <option value="cod">Call of Duty</option>
-        <option value="FO4">FIFA ONLINE  </option>
+        <option value="FO4">FIFA ONLINE</option>
         <option value="AOV">Arena Of Valor</option>
       </select>
-      
+
       <h4>Contact Information:</h4>
       <div class="row">
         <div class="col-sm-6">
-          <label for="contact-type">Type of Contact:</label>
-          <select id="contact-type" name="contact-type" class="form-control">
+          <label for="contactType">Type of Contact:</label>
+          <select id="contactType" name="contactType" class="form-control">
             <option value="email" data-icon="./icons/email.png">Email</option>
             <option value="phone" data-icon="./icons/phone.png">Phone Number</option>
             <option value="facebook" data-icon="./icons/facebook.png">Facebook Handle</option>
@@ -38,24 +38,24 @@
           </select>
         </div>
         <div class="col-sm-6">
-          <label for="contact-detail">Contact Detail:</label>
-          <input type="text" id="contact-detail" name="contact-detail" class="form-control" style="width: 400px"><br>
+          <label for="contactDetail">Contact Detail:</label>
+          <input type="text" id="contactDetail" name="contactDetail" class="form-control" style="width: 400px"><br>
         </div>
       </div>
-      <label for="gameType">Country:</label>
-      <select id="country" name="country">
+
+      <label for="location">Country:</label>
+      <select id="location" name="location">
         <option value="VN">Viet Nam</option>
-        <option value="dota2">Dota 2</option>
-        <option value="csgo">Counter-Strike: Global Offensive</option>
-        <option value="valorant">Valorant</option>
-        <option value="overwatch">Overwatch</option>
-        <option value="cod">Call of Duty</option>
-        <option value="FO4">FIFA ONLINE  </option>
-        <option value="AOV">Arena Of Valor</option>
+        <option value="US">United States</option>
+        <option value="CN">China</option>
+        <option value="KR">Korea</option>
+        <!-- Add more options here -->
       </select>
-      <input class="profile-btn"  type="submit" value="Create Team">
+
+      <input class="profile-btn" type="submit" value="Create Team">
     </form>
   </div>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
 </div>

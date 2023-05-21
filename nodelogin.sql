@@ -31,9 +31,9 @@ CREATE TABLE Team (
   location VARCHAR(255) NOT NULL,
   captain_id INT NOT NULL,
   tournament_id INT,
-  avatar VARCHAR(255),
-  FOREIGN KEY (captain_id) REFERENCES accounts(id),
-  FOREIGN KEY (member_id) REFERENCES accounts(id)
+  avatar LONGBLOB,
+  FOREIGN KEY (captain_id) REFERENCES accounts(id)
+
 );
 
 CREATE TABLE IF NOT EXISTS `login_attempts` (
@@ -61,6 +61,8 @@ CREATE TABLE IF NOT EXISTS `tournament` (
   `end_date` DATETIME NOT NULL,
   `tournament_format` VARCHAR(255) NOT NULL,
   `creator_id`INT NOT NULL,
+  `team_id` INT,
+  `approved` TINYINT(1) NOT NULL DEFAULT 0,
   FOREIGN KEY (creator_id) REFERENCES accounts(id),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
