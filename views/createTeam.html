@@ -58,5 +58,20 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.onload = function() {
+      var error = "{{ error }}";
+      var success = "{{ success }}";
+      
+      if (error) {
+        alert(error);
+      }
+      
+      if (success) {
+        alert(success);
+      }
+    };
+  </script>
+  
 </div>
 {% endblock %}

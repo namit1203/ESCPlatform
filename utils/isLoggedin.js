@@ -1,5 +1,5 @@
 const init = require(__dirname + '\\init.js');
-const connection = require('C:\\Users\\Admin\\Documents\\SWP\\Controller\\dbContext.js');
+const connection = require('..\\Controller\\dbContext.js');
 const isLoggedin = (request, callback, callback2) => {
   // Check if the loggedin param exists in session
   init(request, settings => {

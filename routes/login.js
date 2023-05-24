@@ -1,13 +1,14 @@
 const express = require('express');
-const session = require('express-session');
 const init = require('../utils/init')
+const loginAttempts = require('../utils/loginAttempts')
 const isLoggedin = require('../utils/isLoggedin')
-const app = express();
 const connection = require('../Controller/dbContext')
+const app = express();
 const cryptography = require('crypto');
 const nunjucks = require('nunjucks');
 const secret_key = 'your secret key';
 const path = require('path');
+
 const cookieParser = require('cookie-parser');
 const env = nunjucks.configure('views', {
     autoescape: true,
@@ -15,11 +16,11 @@ const env = nunjucks.configure('views', {
 });
 env.addFilter('formatNumber', num => String(num).replace(/(.)(?=(\d{3})+$)/g,'$1,'));
 env.addFilter('formatDateTime', date => (new Date(date).toISOString()).slice(0, -1).split('.')[0]);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(cookieParser());
+
 app.get(['/', '/login'], (request, response) => isLoggedin(request, () => {
 	// User is logged in, redirect to home page
 	response.redirect('/home');
