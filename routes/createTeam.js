@@ -82,11 +82,6 @@ app.get('/team/:id', (request, response) => {
   });
 });
 
-// Handle 404 errors
-app.use((request, response, next) => {
-  response.status(404).send('404: Page not found');
-});
-
 // Handle server errors
 app.use((error, request, response, next) => {
   console.error(error);

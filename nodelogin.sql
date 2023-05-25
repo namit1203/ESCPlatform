@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `tournament` (
   `end_date` DATETIME NOT NULL,
   `tournament_format` VARCHAR(255) NOT NULL,
   `creator_id`INT NOT NULL,
+  `total_team`INT NOT NULL,
   `team_id` INT,
   `approved` TINYINT(1) NOT NULL DEFAULT 0,
   FOREIGN KEY (creator_id) REFERENCES accounts(id),
