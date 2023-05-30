@@ -1,3 +1,4 @@
+const settingsFormatVarHtml = require('./settingsFormatVarHtml');
 const settingsFormatForm = settings => {
 	let html = '';
 	html += '<div class="tab-content active">';

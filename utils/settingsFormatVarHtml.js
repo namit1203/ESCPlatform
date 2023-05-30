@@ -1,3 +1,4 @@
+const settingsFormatKey = require('./settingsFormatKey');
 const settingsFormatVarHtml = (key, value) => {
 	let html = '';
 	let type = 'text';

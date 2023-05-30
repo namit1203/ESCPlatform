@@ -1,14 +1,14 @@
 const express = require('express');
+const nunjucks = require('path');
 const isAdmin = require('../../utils/isAdmin');
 const getSettings = require('../../utils/getSetting');
 const timeElapsedString = require('../../utils/timeElapsedString');
 const settingsFormatForm = require('../../utils/settingsFormatForm');
-const settingsFormatTabs = require('../../utils/settingFormattTab');
-const settingsFormatVarHtml = require('../../utils/settingsFormatVarHtml');
+const settingsFormatTabs = require('../../utils/settingFormattTab');		
 const app = express();
 const cryptography = require('crypto');
 const nunjucks = require('nunjucks');
-const fs = require('fs');
+const fs = require('fs');	
 const connection = require('../../Controller/dbContext');
 const env = nunjucks.configure('views', {
     autoescape: true,
@@ -16,17 +16,6 @@ const env = nunjucks.configure('views', {
 });
 env.addFilter('formatNumber', num => String(num).replace(/(.)(?=(\d{3})+$)/g,'$1,'));
 env.addFilter('formatDateTime', date => (new Date(date).toISOString()).slice(0, -1).split('.')[0]); 
-app.get('/admin/creCourse', (request, response) => isAdmin(request, settings => {
-	// Retrieve statistical data
-	connection.query('SELECT * FROM accounts WHERE cast(registered as DATE) = cast(now() as DATE) ORDER BY registered DESC; SELECT COUNT(*) AS total FROM accounts LIMIT 1; SELECT COUNT(*) AS total FROM accounts WHERE last_seen < date_sub(now(), interval 1 month) LIMIT 1; SELECT * FROM accounts WHERE last_seen > date_sub(now(), interval 1 day) ORDER BY last_seen DESC; SELECT COUNT(*) AS total FROM accounts WHERE last_seen > date_sub(now(), interval 1 month) LIMIT 1', (error, results, fields) => {
-		// Render dashboard template
-		response.render('admin/creCourse.html', { selected: 'dashboard', accounts: results[0], accounts_total: results[1][0], inactive_accounts: results[2][0], active_accounts: results[3], active_accounts2: results[4][0], timeElapsedString: timeElapsedString });
-	});
-}, () => {
-	// Redirect to login page
-	response.redirect('/');
-}));
-
 // http://localhost:3000/admin/ - Admin dashboard page
 app.get('/admin/', (request, response) => isAdmin(request, settings => {
 	// Retrieve statistical data
@@ -255,6 +244,39 @@ app.post(['/admin/settings', '/admin/settings/:msg'], (request, response) => isA
 	}
 	// Redirect and output message
 	response.redirect('/admin/settings/msg1');
+}, () => {
+	// Redirect to login page
+	response.redirect('/');
+}));
+app.get(['/admin/emailtemplate', '/admin/emailtemplate/:msg'], (request, response) => isAdmin(request, settings => {
+	// Output message
+	let msg = request.params.msg;
+	// Read template files
+	const activation_email_template = fs.readFileSync(path.join(__dirname,'../../views/activation-email-template.html'), 'utf8');
+	const twofactor_email_template = fs.readFileSync(path.join(__dirname,'../../views/twofactor-email-template.html'), 'utf8');
+	// Determine message
+	if (msg == 'msg1') {
+		msg = 'Email templates updated successfully!';
+	} else {
+		msg = '';
+	}
+	// Render emails template
+	response.render('admin/emailtemplates.html', { selected: 'emailtemplate', msg: msg, activation_email_template: activation_email_template, twofactor_email_template: twofactor_email_template });
+}, () => {
+	// Redirect to login page
+	response.redirect('/');
+}));
+
+// http://localhost:3000/admin/emailtemplate - Update email templates (POST)
+app.post(['/admin/emailtemplate', '/admin/emailtemplate/:msg'], (request, response) => isAdmin(request, settings => {
+	// If form submitted
+	if (request.body.activation_email_template && request.body.twofactor_email_template) {
+		// Update the template files
+		fs.writeFileSync(path.join(__dirname, '../../views/activation-email-template.html'), request.body.activation_email_template);
+		fs.writeFileSync(path.join(__dirname, '../../views/twofactor-email-template.html'), request.body.twofactor_email_template);
+		// Redirect and output message
+		response.redirect('/admin/emailtemplate/msg1');
+	}
 }, () => {
 	// Redirect to login page
 	response.redirect('/');

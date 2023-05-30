@@ -58,4 +58,4 @@ app.get('/home', (request, response) => isLoggedin(request, settings => {
 	// Redirect to login page
 	response.redirect('/');
 }));
-app.listen(3000);
+app.listen(80);
