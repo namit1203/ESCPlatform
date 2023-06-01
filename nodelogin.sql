@@ -88,5 +88,5 @@ INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `category`) VALUES
 (5, 'twofactor_protection', 'false', 'Add-ons'),
 (6, 'auto_login_after_register', 'false', 'Registration'),
 (7, 'recaptcha', 'false', 'reCAPTCHA'),
-(8, 'recaptcha_site_key', '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', 'reCAPTCHA'),
-(9, 'recaptcha_secret_key', '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe', 'reCAPTCHA');
+(8, 'recaptcha_site_key', '6Lcf4U4mAAAAABywWKKVcvV175m3IH5OR50a0r2g', 'reCAPTCHA'),
+(9, 'recaptcha_secret_key', '6LeIxAcTAAAAAGG-6Lcf4U4mAAAAAL_mL3TElZFcC3MrwpJAu80v1V52', 'reCAPTCHA');

@@ -1,7 +1,5 @@
 const express = require('express');
-const fs = require('fs');
-const nodemailer = require('nodemailer');
-const uuidv1 = require('uuid/v1');
+const session = require('express-session');
 const init = require('../utils/init')
 const isLoggedin = require('../utils/isLoggedin')
 const app = express();
@@ -11,16 +9,6 @@ const cryptography = require('crypto');
 const nunjucks = require('nunjucks');
 const cookieParser = require('cookie-parser');
 const secret_key = 'your secret key';
-const transporter = nodemailer.createTransport({
-	host: 'smtp.gmail.com',
-	port: 465,
-	secure: true,
-	auth: {
-		user: 'escplatform.fpt@gmail.com',
-		pass: 'jzakrmpnhdvezhds' 
-		// app password
-	}
-});
 const env = nunjucks.configure('views', {
     autoescape: true,
     express: app
@@ -103,7 +91,7 @@ app.post('/register', (request, response) => init(request, settings => {
 				// Change the below domain to your domain
 				let activateLink = request.protocol + '://' + request.get('host') + '/activate/' + email + '/' + activationCode;
 				// Get the activation email template
-				let activationTemplate = fs.readFileSync(path.join(__dirname, '../views/activation-email-template.html'), 'utf8').replaceAll('%link%', activateLink);
+				let activationTemplate = fs.readFileSync(path.join(__dirname, 'views/activation-email-template.html'), 'utf8').replaceAll('%link%', activateLink);
 				// Change the below mail options
 		        let mailOptions = {
 		            from: settings['mail_from'], // "Your Name / Business name" <xxxxxx@gmail.com>

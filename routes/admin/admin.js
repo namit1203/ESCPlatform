@@ -1,5 +1,5 @@
 const express = require('express');
-const nunjucks = require('path');
+const path = require('path');
 const isAdmin = require('../../utils/isAdmin');
 const getSettings = require('../../utils/getSetting');
 const timeElapsedString = require('../../utils/timeElapsedString');
