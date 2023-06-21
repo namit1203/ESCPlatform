@@ -187,7 +187,7 @@ app.get('/admin/roles', (request, response) => isAdmin(request, settings => {
 	// Select and group roles from the accounts table
     connection.query('SELECT role, COUNT(*) as total FROM accounts GROUP BY role; SELECT role, COUNT(*) as total FROM accounts WHERE last_seen > date_sub(now(), interval 1 month) GROUP BY role; SELECT role, COUNT(*) as total FROM accounts WHERE last_seen < date_sub(now(), interval 1 month) GROUP BY role', (error, roles) => {
 		// Roles array
-		new_roles = {};
+		let new_roles = {};
 		// Update the structure
 		for (const role in roles[0]) {
 			new_roles[roles[0][role]['role']] = roles[0][role]['total'];
@@ -196,12 +196,12 @@ app.get('/admin/roles', (request, response) => isAdmin(request, settings => {
 			if (!new_roles[roles_list[role]]) new_roles[roles_list[role]] = 0;
 		}
 		// Get the total number of active roles
-		new_roles_active = {};
+		 let new_roles_active = {};
 		for (const role in roles[1]) {
 			new_roles_active[roles[1][role]['role']] = roles[1][role]['total'];
 		}
 		// Get the total number of inactive roles
-		new_roles_inactive = {};
+		let new_roles_inactive = {};
 		for (const role in roles[2]) {
 			new_roles_inactive[roles[2][role]['role']] = roles[2][role]['total'];
 		}

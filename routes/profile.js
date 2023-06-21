@@ -84,7 +84,7 @@ app.post('/edit_profile', (request, response) => isLoggedin(request, settings =>
 				// Change the below domain to your domain
 				let activateLink = request.protocol + '://' + request.get('host') + '/activate/' + email + '/' + activationCode;
 				// Change the below mail options
-				let mailOptions = {
+				mailOptions = {
 					from: '"Your Name / Business name" <xxxxxx@gmail.com>',
 					to: email,
 					subject: 'Account Activation Required',
@@ -136,5 +136,26 @@ app.post('/edit_profile', (request, response) => isLoggedin(request, settings =>
 		});
 	}
 }));
-
+app.get('/activate/:email/:code', (request, response) => {
+	// Check if the email and activation code match in the database
+	connection.query('SELECT * FROM accounts WHERE email = ? AND activation_code = ?', [request.params.email, request.params.code], (error, accounts) => {
+		// If email and code are valid
+		if (accounts.length > 0) {
+			// Email and activation exist, update the activation code to "activated"
+			connection.query('UPDATE accounts SET activation_code = "activated" WHERE email = ? AND activation_code = ?', [request.params.email, request.params.code], () => {
+				// Authenticate the user
+				request.session.account_loggedin = true;
+				request.session.account_id = accounts[0].id;
+				request.session.account_username = accounts[0].username;
+				request.session.account_password = accounts[0].password;
+				request.session.account_role = accounts[0].role;
+				// Reditect to home page
+				response.redirect('/home');
+			});
+		} else {
+			// Render activate template and output message
+			response.render('activate.html', { msg: 'Incorrect email and/or activation code!' });
+		}
+	});
+});
 module.exports = app;

@@ -11,8 +11,8 @@ const init = (request, callback) => {
 	connection.query('SELECT * FROM settings', (error, settings) => {
 		if (error) throw error;
 		let settings_obj = {};
-		for (let i = 0; i < settings.length; i++) {
-			settings_obj[settings[i].setting_key] = settings[i].setting_value;
+		for (const setting of settings) {
+			settings_obj[setting.setting_key] = setting.setting_value;
 		}
 		callback(settings_obj);
 	});

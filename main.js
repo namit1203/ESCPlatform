@@ -18,6 +18,7 @@ const resetpasswordRouter = require('./routes/resetpassword');
 const createTeam = require('./routes/createTeam');
 const profile = require('./routes/profile');
 const admin = require('./routes/admin/admin');
+const twofactor = require('./routes/twofactor')
 const secret_key = 'your secret key';
 // Update the below details with  MySQL connection details
 
@@ -51,6 +52,7 @@ app.use('/',forgotpasswordRouter);
 app.use('/',resetpasswordRouter);
 app.use('/',profile);
 app.use('/',admin);
+app.use('/',twofactor);
 app.get('/home', (request, response) => isLoggedin(request, settings => {
 	// Render home template
 	response.render('home.html', { username: request.session.account_username, role: request.session.account_role });

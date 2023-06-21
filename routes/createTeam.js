@@ -9,8 +9,8 @@ const multer = require('multer');
 
 const upload = multer({
   limits: {
-    fileSize: 10 * 1024 * 1024
-  }, // 10 MB limit
+    fileSize: 5 * 1024 * 1024
+  }, // 5 MB limit
 });
 
 const env = nunjucks.configure('views', {
@@ -32,33 +32,45 @@ app.get('/createTeam', (request, response) => {
     response.redirect('/'); // Redirect to login page if not logged in
   });
 });
-
 // Insert a new team with avatar
-app.post('/createTeam', upload.single('avatar'), (request, response) => {
-  const name = request.body.teamName;
-  const game_type = request.body.gameType;
-  const contact_type = request.body.contactType;
-  const contact_detail = request.body.contactDetail;
-  const location = request.body.location;
-
-  let avatar = null;
-  if (request.file) {
-    avatar = request.file.buffer;
-  }
-
-  const query = 'INSERT INTO Team (name, game_type, contact_type, contact_detail, location, captain_id, avatar) VALUES (?, ?, ?, ?, ?, ?, ?)';
-  connection.query(query, [name, game_type, contact_type, contact_detail, location, request.session.account_id, avatar], (error, results, fields) => {
-    if (error) {
-      console.error(error);
-      console.log('ID:' + request.session.account_id);
-    } else {
-      const message = `Team "${name}" has been added successfully.`;
-      const redirectUrl = '/home';
-      const alertScript = `<script>alert('${message}');setTimeout(function(){window.location.href='${redirectUrl}';}, 5000);</script>`;
-      response.send(alertScript);
+app.post('/createTeam', (request, response) => {
+  upload.single('avatar')(request, response, (error) => {
+    if (error instanceof multer.MulterError && error.code === 'LIMIT_FILE_SIZE') {
+      const errorMessage = 'The avatar file size exceeds the limit of 5MB.';
+      const alertScript = `<script>alert('${errorMessage}');window.location.href='/createTeam';</script>`;
+      return response.send(alertScript);
     }
+
+    const name = request.body.teamName;
+    const game_type = request.body.gameType;
+    const contact_type = request.body.contactType;
+    const contact_detail = request.body.contactDetail;
+    const location = request.body.location;
+
+    let avatar = null;
+    if (request.file) {
+      avatar = request.file.buffer;
+    }
+
+    const query = 'INSERT INTO Team (name, game_type, contact_type, contact_detail, location, captain_id, avatar) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    connection.query(query, [name, game_type, contact_type, contact_detail, location, request.session.account_id, avatar], (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        console.log('ID:' + request.session.account_id);
+        const errorMessage = 'An error occurred while creating the team.';
+        const alertScript = `<script>alert('${errorMessage}');window.location.href='/createTeam';</script>`;
+        response.send(alertScript);
+      } else {
+        const message = `Team "${name}" has been added successfully.`;
+        const redirectUrl = '/';
+        const alertScript = `<script>alert('${message}');window.location.href='${redirectUrl}';</script>`;
+        response.send(alertScript);
+      }
+    });
   });
 });
+
+
 
 // Example additional routes
 app.get('/teams', (request, response) => {

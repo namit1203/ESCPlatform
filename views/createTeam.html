@@ -10,9 +10,9 @@
   <div class="block">
     <form action="/createTeam" method="post" enctype="multipart/form-data">
       <label for="teamName">Team Name:</label>
-      <input type="text" id="teamName" name="teamName" required style="width: 300px"><br>
-      <label for="avatar">Avatar:</label>
-      <input type="file" id="avatar" name="avatar" accept="image/*"><br>
+      <input type="text" id="teamName" name="teamName" required maxlength="20" style="width: 300px"><br>
+      <label for="avatar">Avatar (Max size: 5MB):</label>
+      <input type="file" id="avatar" name="avatar" accept="image/*" required><br>
       <label for="gameType">Game Type:</label>
       <select id="gameType" name="gameType">
         <option value="lol">League of Legends</option>
@@ -74,4 +74,5 @@
   </script>
   
 </div>
+
 {% endblock %}

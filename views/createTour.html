@@ -1,0 +1,162 @@
+{% extends 'layout.html' %}
+
+{% block title %}Create Tournament{% endblock %}
+
+{% block content %}
+<head>
+  <title>Tournament Form</title>
+  <style>
+    .step {
+      display: none;
+    }
+  </style>
+  <script>
+    function formatCurrency(element) {
+      // Remove existing formatting
+      let value = element.value.replace(/[^\d]/g, '');
+  
+      // Add commas as thousands separators
+      value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  
+      // Add currency symbol
+      value += ' VNĐ';
+  
+      // Update the input value
+      element.value = value;
+    }
+  
+    function recalculateTotalPrize() {
+      let prize1 = parseInt(document.getElementById('prize_1').value.replace(/[^\d]/g, ''));
+      let prize2 = parseInt(document.getElementById('prize_2').value.replace(/[^\d]/g, ''));
+      let prize3 = parseInt(document.getElementById('prize_3').value.replace(/[^\d]/g, ''));
+      let prize4 = parseInt(document.getElementById('prize_4').value.replace(/[^\d]/g, ''));
+  
+      let totalPrize = prize1 + prize2 + prize3 + prize4;
+  
+      document.getElementById('prize_total').value = totalPrize.toLocaleString();
+    }
+  </script>
+</head>
+<body>
+  <h1>Tournament Form</h1>
+  <form id="tournamentForm" action="process_form.php" method="POST" enctype="multipart/form-data">
+    <!-- Step 1: Select Tournament Type -->
+    <div class="step" id="step1">
+      <h2>Step 1: Select Tournament Type</h2>
+      <label for="type">Type:</label>
+      <select name="type" required>
+        <option value="free">Free</option>
+        <option value="payable">Payable</option>
+      </select><br><br>
+      <button type="button" onclick="nextStep(2)">Next</button>
+    </div>
+    
+    <!-- Step 2: General Information -->
+    <div class="step" id="step2">
+      <h2>Step 2: General Information</h2>
+      <label for="game_type">Game Type:</label>
+      <input type="text" name="game_type" required><br><br>
+      
+      <label for="name">Name:</label>
+      <input type="text" name="name" required><br><br>
+      
+      <label for="start_date">Start Date:</label>
+      <input type="datetime-local" name="start_date" required><br><br>
+      
+      <label for="end_date">End Date:</label>
+      <input type="datetime-local" name="end_date" required><br><br>
+      
+      <button type="button" onclick="previousStep(1)">Previous</button>
+      <button type="button" onclick="nextStep(3)">Next</button>
+    </div>
+    
+    <!-- Step 3: Bracket Setting -->
+    <div class="step" id="step3">
+      <h2>Step 3: Bracket Setting</h2>
+      <label for="tournament_format">Tournament Format:</label>
+      <input type="text" name="tournament_format" required><br><br>
+      
+      <label for="total_team">Total Team:</label>
+      <input type="number" name="total_team" required><br><br>
+      
+      <button type="button" onclick="previousStep(2)">Previous</button>
+      <button type="button" onclick="nextStep(4)">Next</button>
+    </div>
+    
+    <!-- Step 4: Prize Details -->
+    <div class="step" id="step4">
+      <h2>Step 4: Prize Details</h2>
+      <label for="prize_total">Total Prize:</label>
+      <input type="text" id="prize_total" name="prize_total" readonly><br><br>
+      
+      <label for="prize_1">Prize 1:</label>
+      <input type="text" id="prize_1" name="prize_1" oninput="formatCurrency(this); recalculateTotalPrize();" required><br><br>
+      
+      <label for="prize_2">Prize 2:</label>
+      <input type="text" id="prize_2" name="prize_2" oninput="formatCurrency(this); recalculateTotalPrize();" required><br><br>
+      
+      <label for="prize_3">Prize 3:</label>
+      <input type="text" id="prize_3" name="prize_3" oninput="formatCurrency(this); recalculateTotalPrize();" required><br><br>
+      
+      <label for="prize_4">Prize 4:</label>
+      <input type="text" id="prize_4" name="prize_4" oninput="formatCurrency(this); recalculateTotalPrize();" required><br><br>
+      
+      <button type="button" onclick="previousStep(3)">Previous</button>
+      <button type="button" onclick="nextStep(5)">Next</button>
+    </div>
+    
+    <!-- Step 5: Tournament Details -->
+    <div class="step" id="step5">
+      <h2>Step 5: Tournament Details</h2>
+      <label for="description">Description:</label>
+      <textarea name="description" required></textarea><br><br>
+      
+      <button type="button" onclick="previousStep(4)">Previous</button>
+      <button type="button" onclick="nextStep(6)">Next</button>
+    </div>
+    
+    <!-- Step 6: Advanced Options -->
+    <div class="step" id="step6">
+      <h2>Step 6: Advanced Options</h2>
+      <label for="checkin_time">Check-in Time:</label>
+      <input type="text" name="checkin_time" required><br><br>
+      
+      <button type="button" onclick="previousStep(5)">Previous</button>
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+
+  <script>
+    var currentStep = 1;
+    var steps = document.getElementsByClassName('step');
+    
+    function showStep(step) {
+      for (var i = 0; i < steps.length; i++) {
+        steps[i].style.display = 'none';
+      }
+      
+      document.getElementById('step' + step).style.display = 'block';
+      currentStep = step;
+    }
+    
+    function nextStep(step) {
+      showStep(step);
+    }
+    
+    function previousStep(step) {
+      showStep(step);
+    }
+    
+    document.getElementById('tournamentForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting
+      
+      // You can perform additional validation or AJAX submission here
+      
+      // Submit the form data
+      this.submit();
+    });
+    
+    showStep(currentStep);
+  </script>
+</body>
+{% endblock %}

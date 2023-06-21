@@ -1,8 +1,10 @@
 const express = require('express');
-const session = require('express-session');
+const uuidv1 = require('uuid/v1');
+const fs = require('fs')
 const init = require('../utils/init')
 const isLoggedin = require('../utils/isLoggedin')
 const app = express();
+const nodemailer = require('nodemailer');
 const path = require('path');
 const connection = require('../Controller/dbContext')
 const cryptography = require('crypto');
@@ -19,6 +21,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(cookieParser());
+const transporter = nodemailer.createTransport({
+	host: 'smtp.gmail.com',
+	port: 465,
+	secure: true,
+	auth: {
+		user: 'escplatform.fpt@gmail.com',
+		pass: 'jzakrmpnhdvezhds' 
+		// app password
+	}
+});
 app.get('/register', (request, response) => isLoggedin(request, () => {
 	// User is logged in, redirect to home page
 	response.redirect('/home');
@@ -91,7 +103,7 @@ app.post('/register', (request, response) => init(request, settings => {
 				// Change the below domain to your domain
 				let activateLink = request.protocol + '://' + request.get('host') + '/activate/' + email + '/' + activationCode;
 				// Get the activation email template
-				let activationTemplate = fs.readFileSync(path.join(__dirname, 'views/activation-email-template.html'), 'utf8').replaceAll('%link%', activateLink);
+				let activationTemplate = fs.readFileSync(path.join(__dirname, '../views/activation-email-template.html'), 'utf8').replaceAll('%link%', activateLink);
 				// Change the below mail options
 		        let mailOptions = {
 		            from: settings['mail_from'], // "Your Name / Business name" <xxxxxx@gmail.com>
