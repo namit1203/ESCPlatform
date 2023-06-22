@@ -1,0 +1,188 @@
+{% extends 'layout.html' %}
+
+{% block title %}Create Tournament{% endblock %}
+
+{% block content %}
+
+&lt;head&gt;
+  &lt;style&gt;
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="datetime-local"],
+    select,
+    textarea {
+      width: 300px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button[type="button"],
+    input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button[type="button"]:hover,
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  &lt;/style&gt;
+  &lt;link rel="stylesheet" href="contact.css"&gt;
+  &lt;title&gt;Tournament Form&lt;/title&gt;
+  &lt;style&gt;
+    .step {
+      display: none;
+    }
+  &lt;/style&gt;
+  [removed]
+    function formatCurrency(element) {
+    // Remove existing formatting and "VNĐ" symbol
+    let value = element.value.replace(/[^\d]/g, '');
+
+    // Add commas as thousands separators
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Add currency symbol
+    value += ' VNĐ';
+
+    // Update the input value
+    element.value = value;
+
+    // Store the numeric value without "VNĐ" as a custom attribute for submission
+    element.setAttribute('data-value', value.replace(/[^\d]/g, ''));
+  }
+
+    function recalculateTotalPrize() {
+      let prize1 = parseInt(document.getElementById('prize_1').value.replace(/[^\d]/g, ''));
+      let prize2 = parseInt(document.getElementById('prize_2').value.replace(/[^\d]/g, ''));
+      let prize3 = parseInt(document.getElementById('prize_3').value.replace(/[^\d]/g, ''));
+      let prize4 = parseInt(document.getElementById('prize_4').value.replace(/[^\d]/g, ''));
+
+      let totalPrize = prize1 + prize2 + prize3 + prize4;
+
+      document.getElementById('prize_total').value = totalPrize.toLocaleString();
+    }
+
+    function validateStep(step) {
+      let isValid = true;
+
+      // Perform validation for each step
+      switch (step) {
+        case 1:
+          // Step 1 validation
+          let type = document.getElementsByName('type')[0].value;
+          if (type === '') {
+            alert&#40;'Please select a tournament type.'&#41;;
+            isValid = false;
+          }
+          break;
+        case 2:
+          // Step 2 validation
+          let gameType = document.getElementsByName('game_type')[0].value;
+          let name = document.getElementsByName('name')[0].value;
+          let startDate = document.getElementsByName('start_date')[0].value;
+          let endDate = document.getElementsByName('end_date')[0].value;
+          if (gameType === '' || name === '' || startDate === '' || endDate === '') {
+            alert&#40;'Please fill in all the fields in Step 2.'&#41;;
+            isValid = false;
+          }
+          break;
+        case 3:
+          // Step 3 validation
+          let tournamentFormat = document.getElementsByName('tournament_format')[0].value;
+          let totalTeam = document.getElementsByName('total_team')[0].value;
+          if (tournamentFormat === '' || totalTeam === '') {
+            alert&#40;'Please fill in all the fields in Step 3.'&#41;;
+            isValid = false;
+          }
+          break;
+        case 4:
+          // Step 4 validation
+          let prize1 = document.getElementsByName('prize_1')[0].value;
+          let prize2 = document.getElementsByName('prize_2')[0].value;
+          let prize3 = document.getElementsByName('prize_3')[0].value;
+          let prize4 = document.getElementsByName('prize_4')[0].value;
+          if (prize1 === '' || prize2 === '' || prize3 === '' || prize4 === '') {
+            alert&#40;'Please fill in all the fields in Step 4.'&#41;;
+            isValid = false;
+          }
+          break;
+        case 5:
+          // Step 5 validation
+          let description = document.getElementsByName('description')[0].value;
+          if (description === '') {
+            alert&#40;'Please enter a description in Step 5.'&#41;;
+            isValid = false;
+          }
+          break;
+        case 6:
+          // Step 6 validation
+          let checkinTime = document.getElementsByName('checkin_time')[0].value;
+          if (checkinTime === '') {
+            alert&#40;'Please enter a check-in time in Step 6.'&#41;;
+            isValid = false;
+          }
+          break;
+      }
+
+      return isValid;
+    }
+
+    function showStep(step) {
+      for (var i = 0; i < steps steps[i].style.display = 'none' step).style.display = 'block' xss=removed>
+
+&lt;body&gt;
+  <h1>Tournament Form</h1>
+  &lt;form id="tournamentForm" action="" method="POST" enctype="multipart/form-data" class="form responsive-width-100"&gt;
+    &lt;!-- Step 1: Select Tournament Type --&gt;
+    <div class="step" id="step1">
+      <h2>Step 1: Select Tournament Type</h2>
+      <label for="type">Type:</label>
+      &lt;select name="type" required&gt;
+        <option value="">Select Type</option>
+        <option value="free">Free</option>
+        <option value="payable">Payable</option>
+      &lt;/select&gt;<br><br>
+      &lt;button type="button" onclick="nextStep(2)"&gt;Next&lt;/button&gt;
+    </div>
+
+    &lt;!-- Step 2: General Information --&gt;
+    <div class="step" id="step2">
+      <h2>Step 2: General Information</h2>
+      <label for="banner">Banner (Max size: 5MB):</label>
+      &lt;input type="file" id="banner" name="banner" accept="image/*" required&gt;<br>
+      <label for="game_type">Game Type:</label>
+      &lt;select name="game_type" style="margin-bottom: 30px;"&gt;
+        <option value="League Of Legends">League Of Legends</option>
+        <option value="Arena Of Valor">Arena Of Valor</option>
+        <option value="Valorant">Valorant</option>
+        <option value="Dota 2">Dota 2</option>
+        <option value="CS:GO">CS:GO</option>
+        <option value="Fortnite">Fortnite</option>
+        <option value="FIFA Online 4">FIFA Online 4</option>
+        <option value="Mobile Legends: Bang Bang">Mobile Legends: Bang Bang</option>
+        <option value="PUBG Mobile">PUBG Mobile</option>
+      &lt;/select&gt;<br><br>
+
+      <label for="name">Name:</label>
+      &lt;input type="text" name="name" required maxlength="50"&gt;<br><br>
+
+      <label for="start_date">Start Date:</label>
+      &lt;input type="datetime-local" name="start_date" required&gt;<br><br>
+
+      <label for="end_date">End Date:</label>
+      &lt;input type="datetime-local" name="end_date" required&gt;<br><br>
+
+      &lt;button type="button" onclick="previousStep(1)"&gt;Previous&lt;/button&gt;
+      &lt;button type="button" onclick="nextStep(3)"&gt;Next&lt;/button&gt;
+    </div>
