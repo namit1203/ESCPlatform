@@ -186,3 +186,26 @@
       &lt;button type="button" onclick="previousStep(1)"&gt;Previous&lt;/button&gt;
       &lt;button type="button" onclick="nextStep(3)"&gt;Next&lt;/button&gt;
     </div>
+    &lt;!-- Step 3: Bracket Setting --&gt;
+    <div class="step" id="step3">
+      <h2>Step 3: Bracket Setting</h2>
+      <label for="tournament_format">Tournament Format:</label>
+      &lt;select name="tournament_format" required&gt;
+        <option value="single_elimination">Single Elimination</option>
+        <option value="double_elimination">Double Elimination</option>
+      &lt;/select&gt;<br><br>
+      
+      <label for="total_team">Total Team:</label>
+      &lt;select name="total_team" required&gt;
+        <option value="4">4</option>
+        <option value="8">8</option>
+        <option value="16">16</option>
+        <option value="32">32</option>
+        <option value="64">64</option>
+        <option value="128">128</option>
+        <option value="256">256</option>
+      &lt;/select&gt;<br><br>
+
+      &lt;button type="button" onclick="previousStep(2)"&gt;Previous&lt;/button&gt;
+      &lt;button type="button" onclick="nextStep(4)"&gt;Next&lt;/button&gt;
+    </div>
