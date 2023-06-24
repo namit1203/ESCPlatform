@@ -16,10 +16,12 @@ const registerRouter = require('./routes/register');
 const forgotpasswordRouter = require('./routes/forgotpassword');
 const resetpasswordRouter = require('./routes/resetpassword');
 const createTeam = require('./routes/createTeam');
+const createTour = require('./routes/createTour');
 const profile = require('./routes/profile');
 const admin = require('./routes/admin/admin');
 const twofactor = require('./routes/twofactor')
 const secret_key = 'your secret key';
+const connection = require('./Controller/dbContext');
 // Update the below details with  MySQL connection details
 
 // Mail settings: Update the username and passowrd below to your email and pass, the current mail host is set to gmail, but you can change that if you want.
@@ -48,16 +50,70 @@ app.use('/', loginRoutes);
 app.use('/', logoutRouter);
 app.use('/',registerRouter);
 app.use('/',createTeam);
+app.use('/',createTour);
 app.use('/',forgotpasswordRouter);
 app.use('/',resetpasswordRouter);
 app.use('/',profile);
 app.use('/',admin);
 app.use('/',twofactor);
-app.get('/home', (request, response) => isLoggedin(request, settings => {
-	// Render home template
-	response.render('home.html', { username: request.session.account_username, role: request.session.account_role });
-}, () => {
-	// Redirect to login page
-	response.redirect('/');
-}));
+app.get('/home', (request, response) => {
+    // Fetch approved tournaments
+    connection.query('SELECT * FROM tournament WHERE approved = 1', (error, tournaments) => {
+        if (error) {
+            // Handle the error appropriately
+            console.error(error);
+            response.status(500).send('Internal Server Error');
+            return;
+        }
+
+        // Fetch top users with approved tournaments
+        connection.query('SELECT accounts.username FROM accounts JOIN tournament ON accounts.id = tournament.creator_id WHERE tournament.approved = 1 GROUP BY accounts.id ORDER BY COUNT(tournament.id) DESC LIMIT 10', (error, users) => {
+            if (error) {
+                // Handle the error appropriately
+                console.error(error);
+                response.status(500).send('Internal Server Error');
+                return;
+            }
+
+            // Render the home template with the fetched data
+            response.render('home.html', { approved_tournaments: tournaments, top_users: users });
+        });
+    });
+});
+app.get('/uploads/:id', (request, response) => {
+    const id = request.params.id;
+    connection.query('SELECT banner FROM tournament WHERE id = ?', [id], (error, results) => {
+        if (error) {
+            console.error(error);
+            response.status(500).send('Internal Server Error');
+            return;
+        }
+
+        if (results.length === 0 || !results[0].banner) {
+            response.status(404).send('Image not found');
+            return;
+        }
+
+        // Set the appropriate Content-Type based on your image type
+        response.set('Content-Type', 'image/jpeg');
+        response.send(results[0].banner);
+    });
+});
+
+  
+app.use((req, res, next) => {
+	const error = new Error('Not Found');
+	error.status = 404;
+	next(error);
+  });
+  
+  app.use((err, req, res, next) => {
+	if (err.status === 404) {
+		res.status(404).sendFile(__dirname + '/views/404.html');
+	} else {
+	  res.status(err.status || 500);
+	  res.send('Internal Server Error');
+	}
+  });
+  
 app.listen(80);

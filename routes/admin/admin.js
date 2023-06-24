@@ -115,7 +115,7 @@ app.get(['/admin/account', '/admin/account/:id'], (request, response) => isAdmin
 		'registered': (new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()).slice(0, -1).split('.')[0],
 		'last_seen': (new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString()).slice(0, -1).split('.')[0]
     };
-    let roles = ['Member', 'Admin',"Teacher"];
+    let roles = ['Member', 'Admin'];
     // GET request ID exists, edit account
     if (request.params.id) {
 		connection.query('SELECT * FROM accounts WHERE id = ?', [request.params.id], (error, accounts) => {
@@ -179,6 +179,91 @@ app.get('/admin/account/delete/:id', (request, response) => isAdmin(request, set
 	// Redirect to login page
 	response.redirect('/');
 }));
+app.get(['/admin/tournaments', '/admin/tournaments/:msg/:search/:status/:activation/:order/:order_by/:page'], (request, response) => {
+    // Params validation
+    let msg = request.params.msg == 'n0' ? '' : request.params.msg;
+    let search = request.params.search == 'n0' ? '' : request.params.search;
+    let status = request.params.status == 'n0' ? '' : request.params.status;
+    let activation = request.params.activation == 'n0' ? '' : request.params.activation;
+    let order = request.params.order == 'DESC' ? 'DESC' : 'ASC';
+    let order_by_whitelist = ['id', 'name', 'type', 'game_type', 'start_date', 'end_date', 'tournament_format', 'creator_id', 'total_team', 'description', 'prize_total', 'prize_1', 'prize_2', 'prize_3', 'prize_4'];
+    let order_by = order_by_whitelist.includes(request.params.order_by) ? request.params.order_by : 'id';
+    // Number of tournaments to show on each pagination page
+    let results_per_page = 20;
+    let page = request.params.page ? request.params.page : 1;
+    let param1 = (page - 1) * results_per_page;
+    let param2 = results_per_page;
+    let param3 = '%' + search + '%';
+    // SQL where clause
+    let where = '';
+    where += search ? 'WHERE (name LIKE ? OR game_type LIKE ?) ' : '';
+    // Add filters
+    if (status == 'active') {
+        where += where ? 'AND end_date >= CURDATE() ' : 'WHERE end_date >= CURDATE() ';
+    }
+    if (status == 'inactive') {
+        where += where ? 'AND end_date < CURDATE() ' : 'WHERE end_date < CURDATE() ';
+    }
+    if (activation == 'pending') {
+        where += where ? 'AND approved = 0 ' : 'WHERE approved = 0 ';
+    }
+    // Params array and append specified params
+    let params = [];
+    if (search) {
+        params.push(param3, param3);
+    }
+    // Fetch the total number of tournaments
+    connection.query('SELECT COUNT(*) AS total FROM tournament ' + where, params, (error, results) => {
+        // Tournaments total
+        let tournaments_total = results[0]['total'];
+        // Append params to array
+        params.push(param1, param2);
+        // Retrieve all tournaments from the database
+        connection.query('SELECT * FROM tournament ' + where + ' ORDER BY ' + order_by + ' ' + order + ' LIMIT ?,?', params, (error, tournaments) => {
+            // Determine the URL
+            let url = '/admin/tournaments/n0/' + (search ? search : 'n0') + '/' + (status ? status : 'n0') + '/' + (activation ? activation : 'n0');
+            // Determine message
+            if (msg) {
+                if (msg == 'msg1') {
+                    msg = 'Tournament created successfully!';
+                } else if (msg == 'msg2') { 
+                    msg = 'Tournament updated successfully!';
+                } else if (msg == 'msg3') {
+                    msg = 'Tournament deleted successfully!';
+                }
+            }
+            // Render tournaments template
+            response.render('admin/tournaments.html', { selected: 'tournaments', tournaments: tournaments, tournaments_total: tournaments_total, msg: msg, page: parseInt(page), search: search, status: status, activation: activation, order: order, order_by: order_by, results_per_page: results_per_page, url: url });
+        });
+    });
+});
+
+app.get('/admin/tournament/:id', (request, response) => {
+    let tournamentId = request.params.id;
+    // Retrieve tournament details from the database
+    connection.query('SELECT * FROM tournament WHERE id = ?', [tournamentId], (error, results) => {
+        if (error || results.length === 0) {
+            response.redirect('/admin/tournaments');
+        } else {
+            let tournament = results[0];
+            // Render tournament details template
+            response.render('admin/tournament_details.html', { tournament: tournament });
+        }
+    });
+});
+
+app.get('/admin/tournament/approve/:id', (request, response) => {
+    let tournamentId = request.params.id;
+    // Update tournament approval status in the database
+    connection.query('UPDATE tournament SET approved = 1 WHERE id = ?', [tournamentId], (error, results) => {
+        if (error || results.affectedRows === 0) {
+            response.redirect('/admin/tournaments');
+        } else {
+            response.redirect('/admin/tournaments/msg2');
+        }
+    });
+});
+
 
 // http://localhost:3000/admin/roles - View accounts roles
 app.get('/admin/roles', (request, response) => isAdmin(request, settings => {

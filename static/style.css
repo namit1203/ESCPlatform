@@ -246,6 +246,31 @@
   .content.profile .profile-btn:hover {
     background-color: #2868c7;
   }
+  main .form input, main .form textarea, main .form select {
+    width: 100%;
+    padding: 15px 5px;
+    margin-bottom: 25px;
+    border: 0;
+    border-bottom: 1px solid #dedfe1;
+  }
+  
+  main .form input:hover, main .form input:active, main .form textarea:hover, main .form textarea:active, main .form select:hover, main .form select:active {
+    border-bottom: 1px solid #b5b9bd;
+  }
+  aside > a:hover, aside > a.selected {
+    background-color: #383d48;
+    color: #fff;
+    border-left: 3px solid #4a79b4;
+    padding: 15px 17px;
+  }
+  
+  aside > a.selected + .sub {
+    display: flex;
+  }
+  aside .sub a:hover, aside .sub a.selected {
+    color: #fff;
+  }
+    
   
   @media screen and (max-width: 400px) {
     .login, .register {

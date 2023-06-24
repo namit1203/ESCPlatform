@@ -56,7 +56,6 @@ CREATE TABLE IF NOT EXISTS `settings` (
   CREATE TABLE IF NOT EXISTS `tournament` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(50) NOT NULL,
-    `detail` varchar(50) NOT NULL,
     `type` enum('free','payable') NOT NULL DEFAULT 'free',
     `game_type` varchar(50) NOT NULL,
     `start_date` DATETIME NOT NULL,
@@ -65,8 +64,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `creator_id`INT NOT NULL,
     `total_team`INT NOT NULL,
     `team_id` INT,
-    `decription` varchar(50) NOT NULL,
-    `prize_decription` varchar(50) NOT NULL,
+    `description` varchar(50) NOT NULL,
     `prize_total` INT NOT NULL,
     `prize_1`INT NOT NULL,
     `prize_2`INT NOT NULL,

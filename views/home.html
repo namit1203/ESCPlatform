@@ -3,8 +3,43 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="content">
-    <h2>Home Page</h2>
-    <p class="block">Welcome back, {{ username }}!</p>
+    <h1>Approved Tournaments</h1>
+    <div id="bannerCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            {% for tournament in approved_tournaments %}
+                <li data-target="#bannerCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active"{% endif %}></li>
+            {% endfor %}
+        </ol>
+
+        <!-- Slides -->
+       <!-- Slides -->
+<div class="carousel-inner">
+    {% for tournament in approved_tournaments %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <img class="d-block w-100" src="/uploads/{{ tournament.id }}" alt="Slide">
+        </div>
+    {% endfor %}
 </div>
+
+
+        <!-- Controls -->
+        <a class="carousel-control-prev" href="#bannerCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#bannerCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div class="top-users">
+        <h2>Top Users with Approved Tournaments</h2>
+        <ul>
+            {% for user in top_users %}
+                <li>{{ user.username }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
