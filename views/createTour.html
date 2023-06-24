@@ -209,3 +209,28 @@
       &lt;button type="button" onclick="previousStep(2)"&gt;Previous&lt;/button&gt;
       &lt;button type="button" onclick="nextStep(4)"&gt;Next&lt;/button&gt;
     </div>
+    &lt;!-- Step 4: Prize Details --&gt;
+    <div class="step" id="step4">
+      <h2>Step 4: Prize Details</h2>
+      
+      <label for="prize_1">Prize 1:</label>
+      &lt;input type="text" id="prize_1" name="prize_1" oninput="formatCurrency(this); recalculateTotalPrize();" required
+        maxlength="50"&gt;<br><br>
+
+      <label for="prize_2">Prize 2:</label>
+      &lt;input type="text" id="prize_2" name="prize_2" oninput="formatCurrency(this); recalculateTotalPrize();" required
+        maxlength="50"&gt;<br><br>
+
+      <label for="prize_3">Prize 3:</label>
+      &lt;input type="text" id="prize_3" name="prize_3" oninput="formatCurrency(this); recalculateTotalPrize();" required
+        maxlength="50"&gt;<br><br>
+
+      <label for="prize_4">Prize 4:</label>
+      &lt;input type="text" id="prize_4" name="prize_4" oninput="formatCurrency(this); recalculateTotalPrize();" required
+        maxlength="50"&gt;<br><br>
+        <label for="prize_total">Total Prize:</label>
+        &lt;input type="text" id="prize_total" name="prize_total" readonly&gt;<br><br>
+  
+      &lt;button type="button" onclick="previousStep(3)"&gt;Previous&lt;/button&gt;
+      &lt;button type="button" onclick="nextStep(5)"&gt;Next&lt;/button&gt;
+    </div>
