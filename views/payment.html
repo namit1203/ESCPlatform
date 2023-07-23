@@ -1,0 +1,46 @@
+{% extends 'admin/layout2.html' %}
+
+{% block title %}Tournament Details{% endblock %}
+
+{% block content %}
+<head>
+    <title>Nạp tiền</title>
+</head>
+<body>
+    <h1>Banking Information</h1>
+    <h1>MOMO : 0776459506</h1>
+    <h1>Name : LE SON NAM</h1>
+    <h1>Content : namit{{ account.id }}</h1> 
+    <form id="jsonDataForm" action="/processJsonData" method="POST" class="form responsive-width-100">
+
+        <label for="jsonData">Money not added ?Click to submit :</label><br>
+        <textarea id="jsonData" name="jsonData" rows="1" cols="1"></textarea><br>
+        <button type="submit">Process Data</button>
+    </form>
+    <div id="responseMessage"></div>
+
+    <script>
+        document.getElementById('jsonDataForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const jsonData = document.getElementById('jsonData').value;
+            
+            try {
+                const response = await fetch('/processJsonData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ jsonData })
+                });
+
+                const data = await response.json();
+                document.getElementById('responseMessage').textContent = data.message;
+            } catch (error) {
+                console.error('Error processing data:', error);
+                document.getElementById('responseMessage').textContent = 'An error occurred while processing the data';
+            }
+        });
+    </script>
+</body>
+{% endblock %}
+

@@ -1,16 +1,11 @@
-{% extends 'layout.html' %}
+{% extends 'admin/layout2.html' %}
 
 {% block title %}Create Tournament{% endblock %}
 
 {% block content %}
 
-<<<<<<< HEAD
 <head>
   <style>
-=======
-&lt;head&gt;
-  &lt;style&gt;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
     label {
       display: block;
       margin-bottom: 5px;
@@ -41,7 +36,6 @@
     input[type="submit"]:hover {
       background-color: #45a049;
     }
-<<<<<<< HEAD
   </style>
   <link rel="stylesheet" href="contact.css">
   <title>Tournament Form</title>
@@ -51,17 +45,6 @@
     }
   </style>
   <script>
-=======
-  &lt;/style&gt;
-  &lt;link rel="stylesheet" href="contact.css"&gt;
-  &lt;title&gt;Tournament Form&lt;/title&gt;
-  &lt;style&gt;
-    .step {
-      display: none;
-    }
-  &lt;/style&gt;
-  [removed]
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
     function formatCurrency(element) {
     // Remove existing formatting and "VNĐ" symbol
     let value = element.value.replace(/[^\d]/g, '');
@@ -99,11 +82,7 @@
           // Step 1 validation
           let type = document.getElementsByName('type')[0].value;
           if (type === '') {
-<<<<<<< HEAD
             alert('Please select a tournament type.');
-=======
-            alert&#40;'Please select a tournament type.'&#41;;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
             isValid = false;
           }
           break;
@@ -114,11 +93,7 @@
           let startDate = document.getElementsByName('start_date')[0].value;
           let endDate = document.getElementsByName('end_date')[0].value;
           if (gameType === '' || name === '' || startDate === '' || endDate === '') {
-<<<<<<< HEAD
             alert('Please fill in all the fields in Step 2.');
-=======
-            alert&#40;'Please fill in all the fields in Step 2.'&#41;;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
             isValid = false;
           }
           break;
@@ -127,11 +102,7 @@
           let tournamentFormat = document.getElementsByName('tournament_format')[0].value;
           let totalTeam = document.getElementsByName('total_team')[0].value;
           if (tournamentFormat === '' || totalTeam === '') {
-<<<<<<< HEAD
             alert('Please fill in all the fields in Step 3.');
-=======
-            alert&#40;'Please fill in all the fields in Step 3.'&#41;;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
             isValid = false;
           }
           break;
@@ -142,11 +113,7 @@
           let prize3 = document.getElementsByName('prize_3')[0].value;
           let prize4 = document.getElementsByName('prize_4')[0].value;
           if (prize1 === '' || prize2 === '' || prize3 === '' || prize4 === '') {
-<<<<<<< HEAD
             alert('Please fill in all the fields in Step 4.');
-=======
-            alert&#40;'Please fill in all the fields in Step 4.'&#41;;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
             isValid = false;
           }
           break;
@@ -154,11 +121,7 @@
           // Step 5 validation
           let description = document.getElementsByName('description')[0].value;
           if (description === '') {
-<<<<<<< HEAD
             alert('Please enter a description in Step 5.');
-=======
-            alert&#40;'Please enter a description in Step 5.'&#41;;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
             isValid = false;
           }
           break;
@@ -166,11 +129,7 @@
           // Step 6 validation
           let checkinTime = document.getElementsByName('checkin_time')[0].value;
           if (checkinTime === '') {
-<<<<<<< HEAD
             alert('Please enter a check-in time in Step 6.');
-=======
-            alert&#40;'Please enter a check-in time in Step 6.'&#41;;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
             isValid = false;
           }
           break;
@@ -180,7 +139,6 @@
     }
 
     function showStep(step) {
-<<<<<<< HEAD
       for (var i = 0; i < steps.length; i++) {
         steps[i].style.display = 'none';
       }
@@ -227,6 +185,10 @@
         <option value="payable">Payable</option>
       </select><br><br>
       <button type="button" onclick="nextStep(2)">Next</button>
+      <br><br>
+      <br><br>
+      <br><br>
+      <br><br>
     </div>
 
     <!-- Step 2: General Information -->
@@ -236,32 +198,6 @@
       <input type="file" id="banner" name="banner" accept="image/*" required><br>
       <label for="game_type">Game Type:</label>
       <select name="game_type" style="margin-bottom: 30px;">
-=======
-      for (var i = 0; i < steps steps[i].style.display = 'none' step).style.display = 'block' xss=removed>
-
-&lt;body&gt;
-  <h1>Tournament Form</h1>
-  &lt;form id="tournamentForm" action="" method="POST" enctype="multipart/form-data" class="form responsive-width-100"&gt;
-    &lt;!-- Step 1: Select Tournament Type --&gt;
-    <div class="step" id="step1">
-      <h2>Step 1: Select Tournament Type</h2>
-      <label for="type">Type:</label>
-      &lt;select name="type" required&gt;
-        <option value="">Select Type</option>
-        <option value="free">Free</option>
-        <option value="payable">Payable</option>
-      &lt;/select&gt;<br><br>
-      &lt;button type="button" onclick="nextStep(2)"&gt;Next&lt;/button&gt;
-    </div>
-
-    &lt;!-- Step 2: General Information --&gt;
-    <div class="step" id="step2">
-      <h2>Step 2: General Information</h2>
-      <label for="banner">Banner (Max size: 5MB):</label>
-      &lt;input type="file" id="banner" name="banner" accept="image/*" required&gt;<br>
-      <label for="game_type">Game Type:</label>
-      &lt;select name="game_type" style="margin-bottom: 30px;"&gt;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
         <option value="League Of Legends">League Of Legends</option>
         <option value="Arena Of Valor">Arena Of Valor</option>
         <option value="Valorant">Valorant</option>
@@ -271,7 +207,6 @@
         <option value="FIFA Online 4">FIFA Online 4</option>
         <option value="Mobile Legends: Bang Bang">Mobile Legends: Bang Bang</option>
         <option value="PUBG Mobile">PUBG Mobile</option>
-<<<<<<< HEAD
       </select><br><br>
 
       <label for="name">Name:</label>
@@ -298,33 +233,6 @@
       
       <label for="total_team">Total Team:</label>
       <select name="total_team" required>
-=======
-      &lt;/select&gt;<br><br>
-
-      <label for="name">Name:</label>
-      &lt;input type="text" name="name" required maxlength="50"&gt;<br><br>
-
-      <label for="start_date">Start Date:</label>
-      &lt;input type="datetime-local" name="start_date" required&gt;<br><br>
-
-      <label for="end_date">End Date:</label>
-      &lt;input type="datetime-local" name="end_date" required&gt;<br><br>
-
-      &lt;button type="button" onclick="previousStep(1)"&gt;Previous&lt;/button&gt;
-      &lt;button type="button" onclick="nextStep(3)"&gt;Next&lt;/button&gt;
-    </div>
-    &lt;!-- Step 3: Bracket Setting --&gt;
-    <div class="step" id="step3">
-      <h2>Step 3: Bracket Setting</h2>
-      <label for="tournament_format">Tournament Format:</label>
-      &lt;select name="tournament_format" required&gt;
-        <option value="single_elimination">Single Elimination</option>
-        <option value="double_elimination">Double Elimination</option>
-      &lt;/select&gt;<br><br>
-      
-      <label for="total_team">Total Team:</label>
-      &lt;select name="total_team" required&gt;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
         <option value="4">4</option>
         <option value="8">8</option>
         <option value="16">16</option>
@@ -332,7 +240,6 @@
         <option value="64">64</option>
         <option value="128">128</option>
         <option value="256">256</option>
-<<<<<<< HEAD
       </select><br><br>
 
       <button type="button" onclick="previousStep(2)">Previous</button>
@@ -340,19 +247,10 @@
     </div>
 
     <!-- Step 4: Prize Details -->
-=======
-      &lt;/select&gt;<br><br>
-
-      &lt;button type="button" onclick="previousStep(2)"&gt;Previous&lt;/button&gt;
-      &lt;button type="button" onclick="nextStep(4)"&gt;Next&lt;/button&gt;
-    </div>
-    &lt;!-- Step 4: Prize Details --&gt;
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1
     <div class="step" id="step4">
       <h2>Step 4: Prize Details</h2>
       
       <label for="prize_1">Prize 1:</label>
-<<<<<<< HEAD
       <input type="text" id="prize_1" name="prize_1" oninput="formatCurrency(this); recalculateTotalPrize();" required
         maxlength="50"><br><br>
 
@@ -387,17 +285,29 @@
     <!-- Step 6: Advanced Options -->
     <div class="step" id="step6">
       <h2>Step 6: Advanced Options</h2>
-      <label for="checkin_time">Check-in Time(by minutes):</label>
+      <label for="checkin_time">Check-in Time:</label>
       <input type="text" name="checkin_time" required maxlength="50"><br><br>
 
       <button type="button" onclick="previousStep(5)">Previous</button>
       <input type="submit" value="Submit">
     </div>
   </form>
-
   <script>
     var currentStep = 1;
     var steps = document.getElementsByClassName('step');
+    function checkFileSize() {
+    var fileInput = document.getElementById('banner');
+    var file = fileInput.files[0];
+    var fileSize = file.size / 1024 / 1024; // Convert to MB
+
+    if (fileSize > 5) {
+      alert('File size exceeds the limit of 5MB.');
+      fileInput.value = ''; // Clear the selected file
+      return false;
+    }
+
+    return true;
+  }
 
     function showStep(step) {
       for (var i = 0; i < steps.length; i++) {
@@ -452,25 +362,3 @@
 
 </body>
 {% endblock %}
-=======
-      &lt;input type="text" id="prize_1" name="prize_1" oninput="formatCurrency(this); recalculateTotalPrize();" required
-        maxlength="50"&gt;<br><br>
-
-      <label for="prize_2">Prize 2:</label>
-      &lt;input type="text" id="prize_2" name="prize_2" oninput="formatCurrency(this); recalculateTotalPrize();" required
-        maxlength="50"&gt;<br><br>
-
-      <label for="prize_3">Prize 3:</label>
-      &lt;input type="text" id="prize_3" name="prize_3" oninput="formatCurrency(this); recalculateTotalPrize();" required
-        maxlength="50"&gt;<br><br>
-
-      <label for="prize_4">Prize 4:</label>
-      &lt;input type="text" id="prize_4" name="prize_4" oninput="formatCurrency(this); recalculateTotalPrize();" required
-        maxlength="50"&gt;<br><br>
-        <label for="prize_total">Total Prize:</label>
-        &lt;input type="text" id="prize_total" name="prize_total" readonly&gt;<br><br>
-  
-      &lt;button type="button" onclick="previousStep(3)"&gt;Previous&lt;/button&gt;
-      &lt;button type="button" onclick="nextStep(5)"&gt;Next&lt;/button&gt;
-    </div>
->>>>>>> 81328b3c252982c2bc41c8b43d3b164bc62047a1

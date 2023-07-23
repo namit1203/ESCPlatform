@@ -1,0 +1,89 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}Tournaments{% endblock %}
+
+{% block content %}
+
+<h2>Tournaments</h2>
+
+{% if msg %}
+<div class="msg success">
+    <i class="fas fa-check-circle"></i>
+    <p>{{ msg }}</p>
+    <i class="fas fa-times"></i>
+</div>
+{% endif %}
+<head>
+  <title>Tournament Information</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tournament Information</h2>
+  <table>
+   
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Game Type</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Tournament Format</th>
+      <th>Creator ID</th>
+      <th>Total Teams</th>
+      <th>Team ID</th>
+      <th>Description</th>
+      <th>Prize Total</th>
+      <th>Prize 1</th>
+      <th>Prize 2</th>
+      <th>Prize 3</th>
+      <th>Prize 4</th>
+      <th>Banner</th>
+      <th>Check-in Time</th>
+      <th>Approved</th>
+    </tr>
+    {% for tournament in tournaments %}
+    <tr>
+      <td>{{ tournament.id }}</td>
+      <td>{{ tournament.name }}</td>
+      <td>{{ tournament.type }}</td>
+      <td>{{ tournament.game_type }}</td>
+      <td>{{ tournament.start_date }}</td>
+      <td>{{ tournament.end_date }}</td>
+      <td>{{ tournament.tournament_format }}</td>
+      <td>{{ tournament.creator_id }}</td>
+      <td>{{ tournament.total_team }}</td>
+      <td>{{ tournament.team_id }}</td>
+      <td>{{ tournament.description }}</td>
+      <td>{{ tournament.prize_total }}</td>
+      <td>{{ tournament.prize_1 }}</td>
+      <td>{{ tournament.prize_2 }}</td>
+      <td>{{ tournament.prize_3 }}</td>
+      <td>{{ tournament.prize_4 }}</td>
+      <td>{% if tournament.banner %}
+        <img src="data:image/jpeg;base64,{{ tournament.banner }}" alt="Banner">
+      {% else %}
+        No banner available
+      {% endif %}</td>
+      <td>{{ tournament.checkin_time }}</td>
+      <td>{{ tournament.approved }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+{% endblock %}

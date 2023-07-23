@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'admin/layout2.html' %}
 
 {% block title %}Profile{% endblock %}
 
@@ -30,10 +30,21 @@
             <strong>Registered</strong>
             {{ account.registered }}
         </div>
+        <div class="profile-detail">
+            <strong>Balance :</strong>
+            {{ account.balance }}
+        </div>
 
         <a class="profile-btn" href="/edit_profile">Edit Details</a>
 
     </div>
 
 </div>
+<script>
+    // Helper function to format the balance as currency
+function formatCurrency(balance) {
+  return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+</script>
 {% endblock %}

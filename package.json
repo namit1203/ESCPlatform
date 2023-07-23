@@ -9,6 +9,13 @@
     "node-fetch": "^2.6.11",
     "nodemailer": "^6.9.2",
     "nunjucks": "^3.2.4",
+    "supertest": "^6.3.3",
     "uuid": "^3.4.0"
+  },
+  "devDependencies": {
+    "jest": "^29.6.1"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

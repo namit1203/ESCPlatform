@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(cookieParser());
 
-app.get(['/', '/login','/abc' ], (request, response) =>
+app.get(['/', '/login' ], (request, response) =>
   isLoggedin(
     request,
     () => {

@@ -1,0 +1,37 @@
+<!-- team.html -->
+
+{% extends 'admin/layout2.html' %}
+
+{% block title %}Team Details{% endblock %}
+
+{% block content %}
+<div class="content profile">
+  <h2>Team Details</h2>
+
+  <div class="block">
+    {% for team in teams %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h3>{{ team.name }}</h3>
+          <p><strong>Member ID:</strong> {{ team.member_id }}</p>
+          <p><strong>Game Type:</strong> {{ team.game_type }}</p>
+          <p><strong>Contact Type:</strong> {{ team.contact_type }}</p>
+          <p><strong>Contact Detail:</strong> {{ team.contact_detail }}</p>
+          <p><strong>Location:</strong> {{ team.location }}</p>
+          <p><strong>Captain ID:</strong> {{ team.captain_id }}</p>
+          <p><strong>Tournament ID:</strong> {{ team.tournament_id }}</p>
+        </div>
+        <div class="col">
+          {% if team.avatar %}
+          <img src="/uploads/{{ team.avatar }}" alt="Team Avatar">
+          {% else %}
+          <p>No avatar available</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

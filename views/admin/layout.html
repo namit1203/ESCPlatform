@@ -16,6 +16,10 @@
                 <a href="/admin/accounts"{{ ' class=selected' if selected == 'accounts' and selectedChild == 'view' else '' }}><span>&#9724;</span>View Accounts</a>
                 <a href="/admin/account"{{ ' class=selected' if selected == 'accounts' and selectedChild == 'manage' else '' }}><span>&#9724;</span>Create Account</a>
             </div>
+            <a href="/admin/tournaments"{{ ' class=selected' if selected == 'tournaments' else '' }}><i class="fas fa-users"></i>Tournaments</a>
+            <div class="sub">
+                <a href="/admin/tournaments"{{ ' class=selected' if selected == 'tournaments' and selectedChild == 'view' else '' }}><span>&#9724;</span>View tournaments</a>
+            </div>
             <a href="/admin/roles"{{ ' class=selected' if selected == 'roles' else '' }}><i class="fas fa-list"></i>Roles</a>
             <a href="/admin/emailtemplate"{{ ' class=selected' if selected == 'emailtemplate' else '' }}><i class="fas fa-envelope"></i>Email Templates</a>
             <a href="/admin/settings"{{ ' class=selected' if selected == 'settings' else '' }}><i class="fas fa-tools"></i>Settings</a>

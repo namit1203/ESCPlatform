@@ -1,0 +1,59 @@
+{% extends 'admin/layout2.html' %}
+
+{% block title %}Tournament Details{% endblock %}
+
+{% block content %}
+<div class="content profile">
+
+    <h2>Tournament Details</h2>
+
+    <div class="block">
+        {% for tournament in tournaments %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>Giải Đấu: {{ tournament.name }}</h1>
+                    <p><strong>Type:</strong> {{ tournament.type }}</p>
+                    <p><strong>Game Type:</strong> {{ tournament.game_type }}</p>
+                    <p><strong>Start Date:</strong> {{ tournament.start_date | formatDateTime }}</p>
+                    <p><strong>End Date:</strong> {{ tournament.end_date | formatDateTime }}</p>
+                    <p><strong>Tournament Format:</strong> {{ tournament.tournament_format }}</p>
+                    <p><strong>Creator :</strong> {{ tournament.creator_id }}</p>
+                    <p><strong>Description:</strong> {{ tournament.description }}</p>
+                    <p><strong>Check-in Time:</strong> {{ tournament.checkin_time }}</p>
+                    <p><strong>Approved:</strong> {{ tournament.approved }}</p>
+                    <p><strong>Total Teams :</strong> {{ totalTeamsJoined }} /  {{ tournament.total_team }}</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="prize-box">
+                        <p><strong>Prize Total:</strong> {{ tournament.prize_total | formatNumber }}</p>
+                        <p><strong>Prize 1:</strong> {{ tournament.prize_1 | formatNumber }}</p>
+                        <p><strong>Prize 2:</strong> {{ tournament.prize_2 | formatNumber }}</p>
+                        <p><strong>Prize 3:</strong> {{ tournament.prize_3 | formatNumber }}</p>
+                        <p><strong>Prize 4:</strong> {{ tournament.prize_4 | formatNumber }}</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    {% if tournament.id %}
+                    <img src="/uploads/{{ tournament.id }}" alt="Tournament Banner">
+                    {% else %}
+                    <p>No banner available</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
+                    <form action="/join-tournament/{{ tournament.id }}" class="form responsive-width-100" method="POST">
+                        <label for="teamId">Select your team:</label>
+                        <select name="teamId" id="teamId">
+                            {% for team in teams %}
+                            <option value="{{ team.id }}">{{ team.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Join Tournament">
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

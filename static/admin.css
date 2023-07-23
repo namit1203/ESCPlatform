@@ -9,7 +9,46 @@
 html {
   height: 100%;
 }
+.content.profile .profile-detail {
+  padding: 5px;
+}
 
+.content.profile .profile-detail strong {
+  display: inline-block;
+  color: #777;
+  min-width: 120px;
+  font-size: 16px;
+}
+
+.content.profile .profile-detail i {
+  width: 28px;
+  color: #aaabad;
+}
+.profile-detail strong {
+  width: 100%;
+}
+.content.profile .profile-btn {
+  display: inline-block;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  background-color: #3274d6;
+  margin: 20px 5px 0 0;
+  padding: 10px 15px;
+  border-radius: 4px;
+  appearance: none;
+  font-size: 14px;
+}
+
+.content.profile .profile-btn:hover {
+  background-color: #2868c7;
+}
+
+
+#jsonData {
+  display: none; /* This will hide the textarea */
+}
 body {
   position: relative;
   min-height: 100%;

@@ -6,7 +6,7 @@ const nunjucks = require('nunjucks');
 const fs = require('fs');
 const connection = require('../Controller/dbContext');
 const multer = require('multer');
-
+const cryptography = require('crypto');
 const upload = multer({
   limits: {
     fileSize: 5 * 1024 * 1024
@@ -32,6 +32,7 @@ app.get('/createTeam', (request, response) => {
     response.redirect('/'); // Redirect to login page if not logged in
   });
 });
+
 // Insert a new team with avatar
 app.post('/createTeam', (request, response) => {
   upload.single('avatar')(request, response, (error) => {
@@ -72,27 +73,6 @@ app.post('/createTeam', (request, response) => {
 
 
 
-// Example additional routes
-app.get('/teams', (request, response) => {
-  connection.query('SELECT * FROM Team', (error, results, fields) => {
-    if (error) {
-      console.error(error);
-    } else {
-      response.render('teams.html', { teams: results });
-    }
-  });
-});
-
-app.get('/team/:id', (request, response) => {
-  const teamId = request.params.id;
-  connection.query('SELECT * FROM Team WHERE id = ?', [teamId], (error, results, fields) => {
-    if (error) {
-      console.error(error);
-    } else {
-      response.render('team.html', { team: results[0] });
-    }
-  });
-});
 
 // Handle server errors
 app.use((error, request, response, next) => {

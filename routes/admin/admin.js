@@ -241,17 +241,15 @@ app.get(['/admin/tournaments', '/admin/tournaments/:msg/:search/:status/:activat
 app.get('/admin/tournament/:id', (request, response) => {
     let tournamentId = request.params.id;
     // Retrieve tournament details from the database
-    connection.query('SELECT * FROM tournament WHERE id = ?', [tournamentId], (error, results) => {
-        if (error || results.length === 0) {
+    connection.query('SELECT * FROM tournament WHERE id = ?', [tournamentId], (error, tournaments) => {
+        if (error || tournaments.length === 0) {
             response.redirect('/admin/tournaments');
         } else {
-            let tournament = results[0];
             // Render tournament details template
-            response.render('admin/tournament_details.html', { tournament: tournament });
+            response.render('admin/tournament.html', { tournaments: tournaments });
         }
     });
 });
-
 app.get('/admin/tournament/approve/:id', (request, response) => {
     let tournamentId = request.params.id;
     // Update tournament approval status in the database
@@ -259,10 +257,18 @@ app.get('/admin/tournament/approve/:id', (request, response) => {
         if (error || results.affectedRows === 0) {
             response.redirect('/admin/tournaments');
         } else {
-            response.redirect('/admin/tournaments/msg2');
+            // Send a notification to the user indicating successful approval
+            response.send(`
+                <script>
+                    alert('Tournament already approved!');
+                    window.location.href = '/admin/tournaments/';
+                </script>
+            `);
         }
     });
 });
+
+
 
 
 // http://localhost:3000/admin/roles - View accounts roles

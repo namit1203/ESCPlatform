@@ -1,111 +1,45 @@
+<!-- tournaments.html -->
 {% extends 'admin/layout.html' %}
 
 {% block title %}Tournaments{% endblock %}
 
 {% block content %}
+    <h2>Tournaments</h2>
 
-<h2>Tournaments</h2>
-
-{% if msg %}
-<div class="msg success">
-    <i class="fas fa-check-circle"></i>
-    <p>{{ msg }}</p>
-    <i class="fas fa-times"></i>
-</div>
-{% endif %}
-
-<div class="content-header links">
-    <a href="/admin/tournament/create">Create Tournament</a>
-    <!-- Add any additional filters or search functionality here -->
-</div>
-
-<div class="content-block">
-    <div class="table">
-        <table>
-            <thead>
-                <tr>
-                    <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/id/1">#{% if order_by=='id' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/name/1">Name{% if order_by=='name' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/type/1">Type{% if order_by=='type' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/game_type/1">Game Type{% if order_by=='game_type' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/start_date/1">Start Date{% if order_by=='start_date' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/end_date/1">End Date{% if order_by=='end_date' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/tournament_format/1">Tournament Format{% if order_by=='tournament_format' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/creator_id/1">Creator ID{% if order_by=='creator_id' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/total_team/1">Total Team{% if order_by=='total_team' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/description/1">Description{% if order_by=='description' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/prize_total/1">Prize Total{% if order_by=='prize_total' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/prize_1/1">Prize 1{% if order_by=='prize_1' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/prize_2/1">Prize 2{% if order_by=='prize_2' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/prize_3/1">Prize 3{% if order_by=='prize_3' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden"><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/prize_4/1">Prize 4{% if order_by=='prize_4' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
-                    <td class="responsive-hidden">Actions</td>
-                </tr>
-            </thead>
-            <tbody>
-                {% if tournaments.length == 0 %}
-                <tr>
-                    <td colspan="13" style="text-align:center;">There are no tournaments</td>
-                </tr>
-                {% endif %}
-                {% for tournament in tournaments %}
-                <tr>
-                    <td>{{ tournament['id'] }}</td>
-                    <td>{{ tournament['name'] }}</td>
-                    <td>{{ tournament['type'] }}</td>
-                    <td>{{ tournament['game_type'] }}</td>
-                    <td>{{ tournament['start_date'].toLocaleDateString('en-US') }}</td>
-                    <td>{{ tournament['end_date'].toLocaleDateString('en-US') }}</td>
-                    <td>{{ tournament['tournament_format'] }}</td>
-                    <td>{{ tournament['creator_id'] }}</td>
-                    <td>{{ tournament['total_team'] }}</td>
-                    <td class="responsive-hidden">{{ tournament['description'] }}</td>
-                    <td>{{ tournament['prize_total'] }}</td>
-                    <td class="responsive-hidden">{{ tournament['prize_1'] }}</td>
-                    <td class="responsive-hidden">{{ tournament['prize_2'] }}</td>
-                    <td class="responsive-hidden">{{ tournament['prize_3'] }}</td>
-                    <td class="responsive-hidden">{{ tournament['prize_4'] }}</td>
-                    <td class="responsive-hidden">
-                        <a href="/admin/tournament/{{ tournament['id'] }}">Details</a>
-                        {% if not tournament['approved'] %}
-                        <a href="/admin/tournament/approve/{{ tournament['id'] }}">Approve</a>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="content-block">
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/id/1">#{% if order_by=='id' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
+                        <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/name/1">Name{% if order_by=='name' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
+                        <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/game_type/1">Game Type{% if order_by=='game_type' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
+                        <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/start_date/1">Start Date{% if order_by=='start_date' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
+                        <td><a href="{{ url }}/{{ 'DESC' if order == 'ASC' else 'ASC' }}/approved/1">Approved{% if order_by=='approved' %}<i class="fas fa-level-{{ order.replace('ASC', 'up').replace('DESC', 'down') }}-alt fa-xs"></i>{% endif %}</a></td>
+                        <td>Actions</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if tournaments.length == 0 %}
+                    <tr>
+                        <td colspan="6" style="text-align:center;">There are no tournaments</td>
+                    </tr>
+                    {% endif %}
+                    {% for tournament in tournaments %}
+                    <tr>
+                        <td>{{ tournament.id }}</td>
+                        <td>{{ tournament.name }}</td>
+                        <td>{{ tournament.game_type }}</td>
+                        <td>{{ tournament.start_date.toLocaleString('vi-VN') }}</td>
+                        <td>{{ tournament.approved }}</td>
+                        <td>
+                            <a href="/admin/tournament/{{ tournament.id }}">View Details</a>
+                            <a href="/admin/tournament/approve/{{ tournament.id }}" onclick="return confirm('Are you sure you want to Approve this tournament?')">Approve</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-
-<div class="pagination">
-    {% if page > 1 %}
-    <a href="{{ url }}/{{ order }}/{{ order_by }}/{{ page-1 }}">Prev</a>
-    {% endif %}
-    <span>Page {{ page }} of {{ 1 if Math.ceil(tournaments_total/results_per_page) == 0 else Math.ceil(tournaments_total/results_per_page) }}</span>
-    {% if page * results_per_page < tournaments_total %}
-    <a href="{{ url }}/{{ order }}/{{ order_by }}/{{ page+1 }}">Next</a>
-    {% endif %}
-</div>
-  <script>
-document.querySelector(".filters-form").onsubmit = event => {
-    event.preventDefault();
-    let url = "/admin/tournaments/n0/" + (document.querySelector("input[name='search']").value ? document.querySelector("input[name='search']").value : 'n0') + "/";
-    if (document.querySelector("#status_active").checked) {
-        url += document.querySelector("#status_active").value;
-    } else if (document.querySelector("#status_inactive").checked) {
-        url += document.querySelector("#status_inactive").value;
-    } else {
-        url += "n0";
-    }
-    url += "/" + (document.querySelector("#activation_pending").checked ? document.querySelector("#activation_pending").value : "n0") + "/";
-    if (document.querySelector("#role") && document.querySelector("#role").checked) {
-        url += document.querySelector("#role").value
-    } else {
-        url += "n0";
-    }
-    url += "/{{ order if order else 'n0' }}/{{ order_by if order_by else 'n0' }}/1";
-    window.location.href = url;
-};
-</script>
 {% endblock %}

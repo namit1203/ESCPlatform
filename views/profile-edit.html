@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'admin/layout2.html' %}
 
 {% block title %}Edit Profile{% endblock %}
 
@@ -9,7 +9,7 @@
 
     <div class="block">
 
-        <form action="" method="post">
+        <form action="" method="post"  class="form responsive-width-100">
 
             <label for="username">Username</label>
             <input type="text" value="{{ account.username }}" name="username" id="username" placeholder="Username">

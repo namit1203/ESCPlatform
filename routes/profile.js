@@ -22,12 +22,20 @@ const env = nunjucks.configure('views', {
 });
 env.addFilter('formatNumber', num => String(num).replace(/(.)(?=(\d{3})+$)/g,'$1,'));
 env.addFilter('formatDateTime', date => (new Date(date).toISOString()).slice(0, -1).split('.')[0]); 
+// Helper function to format the balance as currency
+function formatCurrency(balance) {
+	return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  
 app.get('/profile', (request, response) => isLoggedin(request, settings => {
 	// Get all the users account details so we can populate them on the profile page
 	connection.query('SELECT * FROM accounts WHERE username = ?', [request.session.account_username], (error, accounts, fields) => {
 		// Format the registered date
 		accounts[0].registered = new Date(accounts[0].registered).toISOString().split('T')[0];
-		// Render profile page
+		accounts[0].balance = formatCurrency(accounts[0].balance) + ' VNĐ';
+
+		// Render the profile page with the retrieved account details
+		// response.render('profile.html', { account: accounts[0], role: request.session.account_role });
 		response.render('profile.html', { account: accounts[0], role: request.session.account_role });
 	});
 }, () => {

@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'admin/layout2.html' %}
 
 {% block title %}Create Team{% endblock %}
 
@@ -8,7 +8,7 @@
   <h2>Create your own team</h2>
 
   <div class="block">
-    <form action="/createTeam" method="post" enctype="multipart/form-data">
+    <form action="/createTeam" method="post" enctype="multipart/form-data" class="form responsive-width-100">
       <label for="teamName">Team Name:</label>
       <input type="text" id="teamName" name="teamName" required maxlength="20" style="width: 300px"><br>
       <label for="avatar">Avatar (Max size: 5MB):</label>

@@ -5,7 +5,8 @@ USE `nodelogin1`;
 CREATE TABLE IF NOT EXISTS `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL, 
+  `balance` INT(11) DEFAULT'1',
   `email` varchar(100) NOT NULL,
   `role` enum('Member','Admin') NOT NULL DEFAULT 'Member',
   `activation_code` varchar(255) NOT NULL DEFAULT '',
@@ -57,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(50) NOT NULL,
     `type` enum('free','payable') NOT NULL DEFAULT 'free',
+    `payfee`INT,
     `game_type` varchar(50) NOT NULL,
     `start_date` DATETIME NOT NULL,
     `end_date` DATETIME NOT NULL,
@@ -88,7 +90,13 @@ CREATE TABLE IF NOT EXISTS `match` (
   FOREIGN KEY (team_2_id) REFERENCES Team(id),
   FOREIGN KEY (winner_id) REFERENCES Team(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-
+CREATE TABLE IF NOT EXISTS `tournament_match` (
+    `tournament_id` INT NOT NULL,
+    `match_id` INT NOT NULL,
+    FOREIGN KEY (`tournament_id`) REFERENCES `tournament`(`id`),
+    FOREIGN KEY (`match_id`) REFERENCES `match`(`id`),
+    PRIMARY KEY (`tournament_id`, `match_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `category`) VALUES
 (1, 'account_activation', 'false', 'General'),
 (2, 'mail_from', 'Your Company Name <noreply@yourdomain.com>', 'General'),
@@ -97,5 +105,23 @@ INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `category`) VALUES
 (5, 'twofactor_protection', 'false', 'Add-ons'),
 (6, 'auto_login_after_register', 'false', 'Registration'),
 (7, 'recaptcha', 'false', 'reCAPTCHA'),
-(8, 'recaptcha_site_key', '6Lcf4U4mAAAAABywWKKVcvV175m3IH5OR50a0r2g', 'reCAPTCHA'),
-(9, 'recaptcha_secret_key', '6LeIxAcTAAAAAGG-6Lcf4U4mAAAAAL_mL3TElZFcC3MrwpJAu80v1V52', 'reCAPTCHA');
+(8, 'recaptcha_site_key', '1', 'reCAPTCHA'),
+(9, 'recaptcha_secret_key', '2', 'reCAPTCHA');
+CREATE TABLE IF NOT EXISTS `payment` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `payment_id` BIGINT, -- Use BIGINT instead of INT for larger range
+  `amount` INT,
+  `user_id` INT,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_payment_id` (`payment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `tournament_teams` (
+    `tournament_id` INT NOT NULL,
+    `team_id` INT NOT NULL,
+    PRIMARY KEY (`tournament_id`, `team_id`),
+    FOREIGN KEY (`tournament_id`) REFERENCES `tournament` (`id`),
+    FOREIGN KEY (`team_id`) REFERENCES `Team` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+SHOW TABLES;
+select * from payment

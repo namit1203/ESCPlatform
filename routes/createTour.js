@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({
 // Render the create team form
 app.get('/createTour', (request, response) => {
   isLoggedin(request, settings => {
+    console.log('ID:' + request.session.account_id);
     response.render('createTour.html', {});
   }, () => {
     response.redirect('/'); // Redirect to login page if not logged in
@@ -74,7 +75,7 @@ app.post('/createTour', (request, response) => {
         const alertScript = `<script>alert('${errorMessage}');window.location.href='/createTeam';</script>`;
         response.send(alertScript);
       } else {
-        const message = `Tournament "${name}" has been added successfully.`;
+        const message = `Tournament "${name}" has been added successfully, waiting for approve`;
         const redirectUrl = '/';
         const alertScript = `<script>alert('${message}');window.location.href='${redirectUrl}';</script>`;
         response.send(alertScript);

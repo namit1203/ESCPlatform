@@ -15,6 +15,9 @@
 				<h1>ESC Platfom</h1>
                 <a href="/home"><i class="fas fa-home"></i>Home</a>
 				<a href="/profile"><i class="fas fa-user-circle"></i>Profile</a>
+				{% if role == 'Admin' %}
+				<a href="/admin/" target="_blank"><i class="fas fa-cog"></i>Admin</a>
+				{% endif %}
 					<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 					  Create
 					</button>
@@ -22,9 +25,7 @@
 					  <li><a class="dropdown-item" href="/createTeam">Create Team</a></li>
 					  <li><a class="dropdown-item" href="/createTour">Create Tournament</a></li>
 					</ul>
-				{% if role == 'Admin' %}
-				<a href="/admin/" target="_blank"><i class="fas fa-cog"></i>Admin</a>
-				{% endif %}
+				
 				<a href="/logout"><i class="fas fa-sign-out-alt"></i>Logout</a>
 			</div>
 		</nav>
@@ -32,4 +33,9 @@
 			{% block content %}{% endblock %}
 		</div>
 	</body>
+	<footer class="page-footer font-small blue">
+		<div class="footer-copyright text-center py-3">© 2023 Copyright:
+		  <p href="/"> ESCFPT.com</p>
+		</div>
+	</footer>
 </html>

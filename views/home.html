@@ -33,13 +33,90 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+    <div class="container tour">
+        <div class="row">
+            <div class="top-users col-md-6">
+                <h2>Top Organizers</h2>
+                <table class="user-table" style="padding-left: 12px; padding-right: 12px;">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in top_users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.tournament_count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="top-users col-md-6">
+                <h2>Top Games</h2>
+                <div class="game-images">
+                    <img src="https://beta.ugesports.xyz/cdn-cgi/image/quality=85,format=webp/https://storage.googleapis.com/trex-ugesport/014ceb16-b977-43ed-9c7d-fe3b40aece97.jpeg" style="width: 30%;">
+                    <img src="https://beta.ugesports.xyz/cdn-cgi/image/quality=75,format=webp/https://storage.googleapis.com/trex-ugesport/764.jpeg" style="width: 30%;">
+                    <img src="https://beta.ugesports.xyz/cdn-cgi/image/quality=75,format=webp/https://storage.googleapis.com/trex-ugesport/tft.jpeg" style="width: 30%;">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="container tour">
+        <div class="row">
+           
+        <h2>On-going Tournaments</h2>
+        <ul id="ongoingTournaments">
+            {% for tournament in approved_tournaments %}
+            <div class="col-md-12 tour">
+                <div class="card">
+                    <div class="card-img-overlay">
+                        <h5 class="tournament"><strong>{{ tournament.name }}</strong></h5>
+                        <h5 class="card-text tournament"><strong>{{ tournament.description }}</strong></h5>
+                        <h5 class="card-text tournament">{{ tournament.prize_total|formatNumber }} VNĐ</h5>
+                        <button class="btn btn-primary add-to-cart" data-product="{{ tournament.name }}">Join Tournament</button>
+                        <a href="/tournament/{{ tournament.id }}">
+                            <button class="btn btn-primary add-to-cart" >View Detail</button>
+                          </a>
+                    </div >
+                 
+                    <img src="/uploads/{{ tournament.id }}" class="card-img" alt="Tournament Banner" >
 
-    <div class="top-users">
-        <h2>Top Users with Approved Tournaments</h2>
-        <ul>
-            {% for user in top_users %}
-                <li>{{ user.username }}</li>
+                </div>
+                <br><br>
+            </div>
             {% endfor %}
         </ul>
+        
+        <div id="showMoreContainer">
+            <button id="showMoreButton" class="btn btn-primary sm">Show More</button>
+        </div>
     </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var showMoreButton = $('#showMoreButton');
+        var ongoingTournaments = $('#ongoingTournaments');
+        var visibleTournaments = 2;
+        
+        // Initially show only 2 tournaments
+        ongoingTournaments.find('.tour:gt(' + (visibleTournaments - 1) + ')').hide();
+
+        // Show more tournaments when the button is clicked
+        showMoreButton.on('click', function() {
+            ongoingTournaments.find('.tour:hidden').slice(0, 2).slideDown();
+            visibleTournaments += 2;
+            
+            if (visibleTournaments >= ongoingTournaments.find('.tour').length) {
+                showMoreButton.hide();
+            }
+        });
+    });
+</script>
 {% endblock %}
